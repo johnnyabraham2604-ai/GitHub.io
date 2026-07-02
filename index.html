@@ -71,7 +71,7 @@ img{display:block; max-width:100%;}
 .hero-figure{position:relative;}
 .hero-figure .frame{position:relative; aspect-ratio:4/5; border-radius:3px; overflow:hidden; box-shadow:var(--shadow);}
 .hero-figure figcaption{position:absolute; left:20px; bottom:20px; right:20px; color:#fff; font-size:13px; letter-spacing:.02em; text-shadow:0 1px 12px rgba(0,0,0,.5);}
-.hero-figure .tag{position:absolute; top:-14px; left:-14px; background:var(--accent); color:#fff; font-family:var(--fb); font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:9px 16px; border-radius:2px;}
+.hero-figure .tag{position:absolute; top:-14px; left:-14px; background:var(--accent); color:#fff; font-family:var(--fb); font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:9px 16px; border-radius:2px; z-index:2;}
 
 .ph{background:linear-gradient(150deg,#cdbfae,#8a7c6c); position:relative; width:100%; height:100%;}
 .ph img{width:100%; height:100%; object-fit:cover; position:absolute; inset:0;}
@@ -103,9 +103,13 @@ img{display:block; max-width:100%;}
 .mission-photo{aspect-ratio:4/5; border-radius:3px; overflow:hidden; box-shadow:var(--shadow);}
 .quote{font-family:var(--fd); font-weight:400; font-size:clamp(23px,2.6vw,30px); line-height:1.42; letter-spacing:-.01em; margin:24px 0;}
 .mission .lead{font-size:18px;}
-.author{margin-top:30px; display:flex; align-items:center; gap:14px;}
-.author .ln{width:30px; height:1px; background:var(--accent);}
-.author span{font-family:var(--fb); font-size:13.5px; letter-spacing:.04em; color:var(--ink); font-weight:500;}
+.author{margin-top:30px; display:inline-flex; align-items:center; gap:14px; text-decoration:none;}
+.author .ln{width:30px; height:1px; background:var(--accent); transition:width .25s ease;}
+.author span.nm{font-family:var(--fb); font-size:13.5px; letter-spacing:.04em; color:var(--ink); font-weight:500;}
+.author-link{cursor:pointer;}
+.author-more{color:var(--accent); font-family:var(--fb); font-size:13px; font-weight:600; letter-spacing:.03em; opacity:.85; transition:opacity .2s, transform .2s;}
+.author-link:hover .author-more{opacity:1; transform:translateX(3px);}
+.author-link:hover .ln{width:44px;}
 
 /* how */
 .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:48px; margin-top:64px;}
@@ -127,7 +131,7 @@ img{display:block; max-width:100%;}
 .icard p{color:var(--soft); font-size:16px;}
 .ilist{list-style:none; margin:22px 0 0;}
 .ilist li{font-size:15px; color:var(--ink); padding:11px 0 11px 24px; position:relative; border-top:1px solid var(--line);}
-.ilist li::before{content:"\2014"; position:absolute; left:0; color:var(--accent);}
+.ilist li::before{content:"\00b7"; position:absolute; left:0; color:var(--accent);}
 .icard .foot{margin-top:auto; padding-top:30px;}
 .inote{font-size:13px; color:var(--soft); margin-top:14px; line-height:1.5;}
 
@@ -139,9 +143,11 @@ img{display:block; max-width:100%;}
 
 /* partners */
 .partners{background:var(--paper-2); text-align:center;}
-.plogos{display:flex; flex-wrap:wrap; justify-content:center; gap:18px 48px; margin-top:36px; align-items:center;}
-.plogo{font-family:var(--fd); font-weight:500; font-size:19px; color:var(--ink); opacity:.62;}
-.pnote{font-family:var(--fb); font-size:11px; letter-spacing:.04em; color:var(--soft); text-transform:uppercase; margin-top:30px;}
+.plogos{display:flex; flex-wrap:wrap; justify-content:center; gap:26px 52px; margin-top:40px; align-items:center;}
+.plogo-item{display:inline-flex; align-items:center; justify-content:center; min-height:60px;}
+.plogo-img{height:56px; width:auto; max-width:190px; object-fit:contain; opacity:.82; filter:grayscale(100%); transition:opacity .25s ease, filter .25s ease;}
+.plogo-item:hover .plogo-img{opacity:1; filter:none;}
+.plogo{font-family:var(--fd); font-weight:500; font-size:19px; color:var(--ink); opacity:.62; align-items:center;}
 
 /* newsletter */
 .news{background:var(--ink-deep); color:var(--paper);}
@@ -154,6 +160,16 @@ img{display:block; max-width:100%;}
 .nform input:focus{outline:0;}
 .nform button{background:none; border:0; color:var(--accent-2); font-family:var(--fb); font-weight:600; font-size:14px; letter-spacing:.04em; cursor:pointer; padding:0 6px;}
 .nok{font-family:var(--fd); font-style:italic; font-size:19px; color:var(--accent-2);}
+
+/* founder subpage */
+.founder-sec{padding:72px 0 120px;}
+.founder-in{display:grid; grid-template-columns:.82fr 1.18fr; gap:64px; align-items:start; margin-top:30px;}
+.founder-photo{aspect-ratio:4/5; border-radius:3px; overflow:hidden; box-shadow:var(--shadow); position:sticky; top:104px;}
+.founder-role{font-family:var(--fb); font-size:13.5px; letter-spacing:.05em; color:var(--accent); font-weight:600; text-transform:uppercase; margin:14px 0 26px;}
+.founder-p{color:var(--soft); font-size:18px; line-height:1.78; margin-bottom:18px; max-width:62ch;}
+.founder-actions{margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;}
+.back-link{display:inline-flex; align-items:center; gap:7px; color:var(--soft); text-decoration:none; font-size:14px; letter-spacing:.02em;}
+.back-link:hover{color:var(--accent);}
 
 /* footer */
 .ft{background:var(--paper); border-top:1px solid var(--line);}
@@ -199,8 +215,9 @@ img{display:block; max-width:100%;}
 
 @media (max-width:900px){
   .nav{display:none;} .burger{display:block;} .hd-actions .btn{display:none;}
-  .hero-in,.mission-in,.news-in{grid-template-columns:1fr; gap:48px;}
+  .hero-in,.mission-in,.news-in,.founder-in{grid-template-columns:1fr; gap:48px;}
   .hero-figure{max-width:420px; margin:0 auto;}
+  .founder-photo{position:static; max-width:360px; margin-bottom:8px;}
   .vgrid,.steps,.icards,.ib-in{grid-template-columns:1fr;}
   .ib-in{gap:40px; padding:64px 0;}
   .vgrid{gap:1px;}
@@ -215,9 +232,11 @@ img{display:block; max-width:100%;}
 <body>
 <div id="app"></div>
 <script>
-const LOGO = "https://static.wixstatic.com/media/1c0547_0d799b7117b54a7fb7a3d91f08a5cec9~mv2.png";
+const LOGO = "img/logo.png";
 const IMG = {
-  heroPhoto:"https://static.wixstatic.com/media/1c0547_356d0aa43f13431485d7b9d9ce251c15~mv2.jpg",
+  hero:"img/hero.jpg",                                                                        // NEW signature image (local) - hero only
+  founder:"img/founder.jpg",                                                                  // founder portrait (local)
+  galleryLead:"https://static.wixstatic.com/media/1c0547_356d0aa43f13431485d7b9d9ce251c15~mv2.jpg", // old hero, now first gallery tile
   missionPhoto:"https://static.wixstatic.com/media/1c0547_b31bac33b20d4538913f46df7ab10446~mv2.jpg",
   gallery:[
     "https://static.wixstatic.com/media/1c0547_8454098ce65640a3ae043fce8436ed33~mv2.jpg",
@@ -226,100 +245,141 @@ const IMG = {
   ]
 };
 
+/* Partner logos: drop the files into img/partners/ and they appear automatically.
+   Until a file exists, the partner name shows as text (graceful fallback). */
+const PARTNERS = [
+  {name:"German Embassy, Nairobi",     nameDe:"Deutsche Botschaft, Nairobi",     logo:"img/partners/embassy-nairobi.png"},
+  {name:"German Embassy, Addis Ababa", nameDe:"Deutsche Botschaft, Addis Abeba", logo:"img/partners/embassy-addis.png"},
+  {name:"Archdiocese of Bamberg",      nameDe:"Erzdi\u00f6zese Bamberg",         logo:"img/partners/erzbistum-bamberg.png"}
+];
+
 const COPY = {
   en:{
     nav:{mission:"Mission",how:"How it works",impact:"Impact",involved:"Get involved"},
     ctaMain:"Donate gear",
-    hero:{kicker:"A Franconian initiative \u00b7 Kenya & Ethiopia",
+    hero:{kicker:"A Franconian initiative \u00b7 East Africa",
       titleA:"Bringing joy to children of the ",
       titleEm:"Horn of Africa.",
       sub:"We collect the sports gear your club no longer needs and place it directly into the hands of children who have never owned a kit of their own.",
       cta1:"Donate your club's gear", cta2:"See the impact",
-      caption:"Football for Joy \u2014 pilot delivery, East Africa",
+      caption:"Football for Joy \u00b7 pilot delivery, East Africa",
       tag:"Pilot project",
       m1n:"7,250+", m1l:"Children reached", m2n:"2", m2l:"Countries"},
-    impact:{stats:[{n:7250,plus:true,label:"Children reached"},{n:200,plus:true,label:"Footballs delivered"},{n:100,plus:true,label:"Jerseys & kits"},{n:2,plus:false,label:"Countries \u2014 Kenya & Ethiopia"}],
-      note:"Figures from the Football for Joy pilot \u00b7 replace with verified numbers"},
+    impact:{stats:[{n:7250,plus:true,label:"Children reached"},{n:200,plus:true,label:"Footballs delivered"},{n:450,plus:true,label:"Jerseys & kits"},{n:2,plus:false,label:"Countries: Kenya & Ethiopia"}],
+      note:"Figures from the Football for Joy pilot"},
     purpose:{kicker:"Why we exist", title:"Six things every child deserves",
       lead:"Sport is rarely just sport. For a child with nothing, a ball can be the start of everything.",
       values:[["i.","Joy","A reason to smile, every single day."],["ii.","Unity","The belonging that comes from a team."],["iii.","Peace","A break from everything else."],["iv.","Growth","Confidence that outlasts the game."],["v.","Inspiration","Permission to dream bigger."],["vi.","Support","Someone in their corner."]]},
     mission:{kicker:"Our mission", title:"It started with barefoot football.",
-      q:"We all carry a few cherished moments from childhood \u2014 when everything felt right and the world's problems disappeared. For me, those came on endless summer days of football: barefoot on dusty fields, laughing until it hurt.",
-      p:"Horn of Africa Moments exists to create those memories for the children who need them most \u2014 so they can look back on their childhood with the same warmth we do.",
-      author:"Johannes Abraham, Founder"},
+      q:"We all carry a few cherished moments from childhood, when everything felt right and the world's problems disappeared. For me, those came on endless summer days of football: barefoot on dusty fields, laughing until it hurt.",
+      p:"Horn of Africa Moments exists to create those memories for the children who need them most, so they can look back on their childhood with the same warmth we do.",
+      author:"Johannes Abraham, Founder", more:"More about the founder \u2192"},
     how:{kicker:"How it works", title:"Your storeroom surplus, their first kit.",
-      steps:[["01","You pledge","Tell us what gear your club no longer needs \u2014 footballs, jerseys, boots, anything."],["02","We collect","We arrange pickup across Franconia. No cost, no hassle for your club."],["03","We deliver","Your gear reaches schools in East Africa \u2014 with photographs sent back to you."]]},
+      steps:[["01","You pledge","Tell us what gear your club no longer needs: footballs, jerseys, boots, anything."],["02","We collect","We arrange pickup across Franconia. No cost, no hassle for your club."],["03","We deliver","Your gear reaches schools in East Africa, with photographs sent back to you."]]},
     involved:{kicker:"Get involved", title:"Two ways to get a child playing.",
-      gear:{tag:"For clubs",title:"Donate your club's gear",body:"Footballs, jerseys, shorts, socks, keeper gloves \u2014 any size, any condition. Your surplus is another child's first kit. We handle collection. You simply say yes.",list:["Footballs \u2014 any size, any condition","Jerseys, shorts & socks","Keeper gloves & boots"],cta:"Pledge gear"},
-      money:{tag:"For supporters",title:"Become a sponsor",body:"Fund the transport, equipment and outreach that get gear to children who can't afford to play. Every contribution is traceable.",note:"Online giving is coming soon \u2014 leave your details and we'll be in touch.",cta:"Register interest"}},
+      gear:{tag:"For clubs",title:"Donate your club's gear",body:"Footballs, jerseys, shorts, socks, keeper gloves. Any size, any condition. Your surplus is another child's first kit. We handle collection. You simply say yes.",list:["Footballs, any size, any condition","Jerseys, shorts & socks","Keeper gloves & boots"],cta:"Pledge gear"},
+      money:{tag:"For supporters",title:"Become a sponsor",body:"Fund the transport, equipment and outreach that get gear to children who can't afford to play. Every contribution is traceable.",note:"Online giving is coming soon. Leave your details and we'll be in touch.",cta:"Register interest"}},
     gallery:{kicker:"Our impact", title:"Football for Joy, in pictures.",
-      lead:"Our pilot delivered more than we dared hope: over 200 footballs and 100+ jerseys, straight into children's hands."},
-    partners:{sub:"Working alongside", list:["German Embassy, Nairobi","German Embassy, Addis Ababa","Archdiocese of Bamberg","beVisioneers"], note:"Placeholder partners \u2014 confirm or replace with logos"},
-    news:{title:"Stay close to the work.", sub:"Occasional updates from the pitch \u2014 deliveries, stories, and where your gear ends up.", placeholder:"Your email address", cta:"Subscribe", success:"Thank you \u2014 you're on the list."},
-    footer:{tagline:"A Franconian initiative bringing the joy of sport to children in Kenya and Ethiopia.", contact:"Contact", follow:"Built as a prototype \u2014 content & figures are placeholders for review.", rights:"Horn of Africa Moments"},
+      lead:"Our pilot delivered more than we dared hope: over 200 footballs and 450+ jerseys, straight into children's hands."},
+    partners:{sub:"Working alongside"},
+    news:{title:"Stay close to the work.", sub:"Occasional updates from the pitch: deliveries, stories, and where your gear ends up.", placeholder:"Your email address", cta:"Subscribe", success:"Thank you. You're on the list."},
+    footer:{tagline:"A Franconian initiative bringing the joy of sport to children in Kenya and Ethiopia.", contact:"Contact", follow:"Built as a prototype. Content & figures are placeholders for review.", rights:"Horn of Africa Moments"},
+    founder:{kicker:"The founder", title:"Johannes Abraham", role:"Founder, Horn of Africa Moments",
+      paras:[
+        "Johannes Abraham, founder of Horn of Africa Moments, is an engineering graduate driven by purpose and impact. A first-generation student with roots in Eritrea, he is deeply committed to giving back to the children and communities of East Africa.",
+        "Born and raised between Germany and England, he developed a strong sense of cultural identity and responsibility from an early age. His mission is simple but powerful: to uplift and inspire the children of the Horn of Africa through meaningful action and joyful experiences.",
+        "His journey has taken him across Europe, Africa and Asia, building lasting relationships and a global perspective that now fuels his nonprofit work.",
+        "From working at Mercedes-Benz to studying at Asia's top-ranked Tsinghua University, Johannes has seen firsthand how much one person can achieve when driven by passion and purpose.",
+        "With Horn of Africa Moments, he is pursuing his dream of bringing joy, opportunity and hope to the region, and of making a lasting impact on as many children's lives as possible."
+      ],
+      linkedin:"LinkedIn", back:"Back to home"},
     forms:{required:"Please add your name and email.", email:"Please enter a valid email address.", close:"Close",
-      gear:{tag:"For clubs",title:"Pledge your club's gear",sub:"Tell us what you have \u2014 we'll handle the rest.",club:"Club or organisation",name:"Your name",emailL:"Email",place:"Postcode / town",whatL:"What can you donate?",what:["Footballs","Jerseys & shirts","Shorts & socks","Keeper gear","Boots","Other"],msg:"Anything else? (optional)",submit:"Send pledge",okT:"Pledge received.",okB:"Thank you. We'll be in touch within a few days to arrange collection."},
+      gear:{tag:"For clubs",title:"Pledge your club's gear",sub:"Tell us what you have. We'll handle the rest.",club:"Club or organisation",name:"Your name",emailL:"Email",place:"Postcode / town",whatL:"What can you donate?",what:["Footballs","Jerseys & shirts","Shorts & socks","Keeper gear","Boots","Other"],msg:"Anything else? (optional)",submit:"Send pledge",okT:"Pledge received.",okB:"Thank you. We'll be in touch within a few days to arrange collection."},
       money:{tag:"For supporters",title:"Support Football for Joy",sub:"Leave your details and we'll share the best way to help.",name:"Your name",emailL:"Email",howL:"How would you like to help?",how:["One-time gift","Monthly giving","Corporate / club sponsorship","Not sure yet"],msg:"Message (optional)",submit:"Register interest",okT:"Thank you.",okB:"We'll reach out with ways to support the children."}}
   },
   de:{
     nav:{mission:"Mission",how:"Ablauf",impact:"Wirkung",involved:"Mitmachen"},
     ctaMain:"Ausr\u00fcstung spenden",
-    hero:{kicker:"Eine fr\u00e4nkische Initiative \u00b7 Kenia & \u00c4thiopien",
+    hero:{kicker:"Eine fr\u00e4nkische Initiative \u00b7 Ostafrika",
       titleA:"Freude f\u00fcr die Kinder am ",
       titleEm:"Horn von Afrika.",
       sub:"Wir sammeln die Sportausr\u00fcstung, die euer Verein nicht mehr braucht, und bringen sie direkt zu Kindern, die noch nie ein eigenes Trikot besessen haben.",
       cta1:"Vereinsausr\u00fcstung spenden", cta2:"Unsere Wirkung",
-      caption:"Football for Joy \u2014 \u00dcbergabe im Pilotprojekt, Ostafrika",
+      caption:"Football for Joy \u00b7 \u00dcbergabe im Pilotprojekt, Ostafrika",
       tag:"Pilotprojekt",
       m1n:"7.250+", m1l:"Kinder erreicht", m2n:"2", m2l:"L\u00e4nder"},
-    impact:{stats:[{n:7250,plus:true,label:"Kinder erreicht"},{n:200,plus:true,label:"Fu\u00dfb\u00e4lle \u00fcbergeben"},{n:100,plus:true,label:"Trikots & Sets"},{n:2,plus:false,label:"L\u00e4nder \u2014 Kenia & \u00c4thiopien"}],
-      note:"Zahlen aus dem Pilotprojekt Football for Joy \u00b7 bitte durch gepr\u00fcfte Werte ersetzen"},
+    impact:{stats:[{n:7250,plus:true,label:"Kinder erreicht"},{n:200,plus:true,label:"Fu\u00dfb\u00e4lle \u00fcbergeben"},{n:450,plus:true,label:"Trikots & Sets"},{n:2,plus:false,label:"L\u00e4nder: Kenia & \u00c4thiopien"}],
+      note:"Zahlen aus dem Pilotprojekt Football for Joy"},
     purpose:{kicker:"Warum es uns gibt", title:"Sechs Dinge, die jedes Kind verdient",
       lead:"Sport ist selten nur Sport. F\u00fcr ein Kind, das nichts hat, kann ein Ball der Anfang von allem sein.",
-      values:[["i.","Freude","Ein Grund zu l\u00e4cheln \u2014 jeden Tag."],["ii.","Gemeinschaft","Das Gef\u00fchl, zu einem Team zu geh\u00f6ren."],["iii.","Frieden","Eine Auszeit von allem anderen."],["iv.","Wachstum","Selbstvertrauen, das bleibt."],["v.","Inspiration","Die Erlaubnis, gr\u00f6\u00dfer zu tr\u00e4umen."],["vi.","Unterst\u00fctzung","Jemand, der an sie glaubt."]]},
+      values:[["i.","Freude","Ein Grund zu l\u00e4cheln, jeden Tag."],["ii.","Gemeinschaft","Das Gef\u00fchl, zu einem Team zu geh\u00f6ren."],["iii.","Frieden","Eine Auszeit von allem anderen."],["iv.","Wachstum","Selbstvertrauen, das bleibt."],["v.","Inspiration","Die Erlaubnis, gr\u00f6\u00dfer zu tr\u00e4umen."],["vi.","Unterst\u00fctzung","Jemand, der an sie glaubt."]]},
     mission:{kicker:"Unsere Mission", title:"Alles begann mit barfu\u00df gespieltem Fu\u00dfball.",
-      q:"Wir alle tragen ein paar kostbare Kindheitsmomente in uns \u2014 Momente, in denen alles richtig war und die Probleme der Welt verschwanden. Bei mir waren das endlose Sommertage voller Fu\u00dfball: barfu\u00df auf staubigen Pl\u00e4tzen, gelacht, bis es wehtat.",
-      p:"Horn of Africa Moments gibt es, um genau solche Erinnerungen f\u00fcr die Kinder zu schaffen, die sie am meisten brauchen \u2014 damit auch sie eines Tages mit derselben W\u00e4rme zur\u00fcckblicken.",
-      author:"Johannes Abraham, Gr\u00fcnder"},
+      q:"Wir alle tragen ein paar kostbare Kindheitsmomente in uns: Momente, in denen alles richtig war und die Probleme der Welt verschwanden. Bei mir waren das endlose Sommertage voller Fu\u00dfball: barfu\u00df auf staubigen Pl\u00e4tzen, gelacht, bis es wehtat.",
+      p:"Horn of Africa Moments gibt es, um genau solche Erinnerungen f\u00fcr die Kinder zu schaffen, die sie am meisten brauchen, damit auch sie eines Tages mit derselben W\u00e4rme zur\u00fcckblicken.",
+      author:"Johannes Abraham, Gr\u00fcnder", more:"Mehr \u00fcber den Gr\u00fcnder \u2192"},
     how:{kicker:"So funktioniert's", title:"Aus eurem Lager wird ihr erstes Trikot.",
-      steps:[["01","Ihr meldet euch","Sagt uns, welche Ausr\u00fcstung euer Verein nicht mehr braucht \u2014 B\u00e4lle, Trikots, Schuhe, alles."],["02","Wir holen ab","Wir organisieren die Abholung in ganz Franken. Kostenlos und ohne Aufwand."],["03","Wir \u00fcbergeben","Eure Ausr\u00fcstung erreicht Schulen in Ostafrika \u2014 mit Fotos zur\u00fcck an euch."]]},
+      steps:[["01","Ihr meldet euch","Sagt uns, welche Ausr\u00fcstung euer Verein nicht mehr braucht: B\u00e4lle, Trikots, Schuhe, alles."],["02","Wir holen ab","Wir organisieren die Abholung in ganz Franken. Kostenlos und ohne Aufwand."],["03","Wir \u00fcbergeben","Eure Ausr\u00fcstung erreicht Schulen in Ostafrika, mit Fotos zur\u00fcck an euch."]]},
     involved:{kicker:"Mitmachen", title:"Zwei Wege, ein Kind zum Spielen zu bringen.",
-      gear:{tag:"F\u00fcr Vereine",title:"Vereinsausr\u00fcstung spenden",body:"B\u00e4lle, Trikots, Hosen, Stutzen, Torwarthandschuhe \u2014 jede Gr\u00f6\u00dfe, jeder Zustand. Euer \u00dcberschuss ist das erste Trikot eines Kindes. Die Abholung \u00fcbernehmen wir. Ihr sagt einfach Ja.",list:["Fu\u00dfb\u00e4lle \u2014 jede Gr\u00f6\u00dfe, jeder Zustand","Trikots, Hosen & Stutzen","Torwarthandschuhe & Schuhe"],cta:"Ausr\u00fcstung anbieten"},
-      money:{tag:"F\u00fcr Unterst\u00fctzer",title:"Sponsor werden",body:"Finanziert Transport, Ausr\u00fcstung und Verteilung, die die Sachen zu Kindern bringen, die sich das Spielen nicht leisten k\u00f6nnen. Jeder Beitrag ist nachvollziehbar.",note:"Online-Spenden folgen bald \u2014 hinterlasst eure Daten, wir melden uns.",cta:"Interesse anmelden"}},
-    gallery:{kicker:"Unsere Wirkung", title:"Football for Joy \u2014 in Bildern.",
-      lead:"Unser Pilotprojekt hat mehr bewirkt als erhofft: \u00fcber 200 Fu\u00dfb\u00e4lle und mehr als 100 Trikots, direkt in Kinderh\u00e4nde."},
-    partners:{sub:"Wir arbeiten zusammen mit", list:["Deutsche Botschaft, Nairobi","Deutsche Botschaft, Addis Abeba","Erzdi\u00f6zese Bamberg","beVisioneers"], note:"Platzhalter-Partner \u2014 bitte best\u00e4tigen oder durch Logos ersetzen"},
-    news:{title:"Bleibt nah an der Arbeit dran.", sub:"Ab und zu Neues vom Platz \u2014 \u00dcbergaben, Geschichten und wohin eure Ausr\u00fcstung gelangt.", placeholder:"Eure E-Mail-Adresse", cta:"Abonnieren", success:"Danke \u2014 ihr seid dabei."},
-    footer:{tagline:"Eine fr\u00e4nkische Initiative, die die Freude am Sport zu Kindern in Kenia und \u00c4thiopien bringt.", contact:"Kontakt", follow:"Als Prototyp erstellt \u2014 Inhalte & Zahlen sind Platzhalter zur Abstimmung.", rights:"Horn of Africa Moments"},
+      gear:{tag:"F\u00fcr Vereine",title:"Vereinsausr\u00fcstung spenden",body:"B\u00e4lle, Trikots, Hosen, Stutzen, Torwarthandschuhe. Jede Gr\u00f6\u00dfe, jeder Zustand. Euer \u00dcberschuss ist das erste Trikot eines Kindes. Die Abholung \u00fcbernehmen wir. Ihr sagt einfach Ja.",list:["Fu\u00dfb\u00e4lle, jede Gr\u00f6\u00dfe, jeder Zustand","Trikots, Hosen & Stutzen","Torwarthandschuhe & Schuhe"],cta:"Ausr\u00fcstung anbieten"},
+      money:{tag:"F\u00fcr Unterst\u00fctzer",title:"Sponsor werden",body:"Finanziert Transport, Ausr\u00fcstung und Verteilung, die die Sachen zu Kindern bringen, die sich das Spielen nicht leisten k\u00f6nnen. Jeder Beitrag ist nachvollziehbar.",note:"Online-Spenden folgen bald. Hinterlasst eure Daten, wir melden uns.",cta:"Interesse anmelden"}},
+    gallery:{kicker:"Unsere Wirkung", title:"Football for Joy, in Bildern.",
+      lead:"Unser Pilotprojekt hat mehr bewirkt als erhofft: \u00fcber 200 Fu\u00dfb\u00e4lle und mehr als 450 Trikots, direkt in Kinderh\u00e4nde."},
+    partners:{sub:"Wir arbeiten zusammen mit"},
+    news:{title:"Bleibt nah an der Arbeit dran.", sub:"Ab und zu Neues vom Platz: \u00dcbergaben, Geschichten und wohin eure Ausr\u00fcstung gelangt.", placeholder:"Eure E-Mail-Adresse", cta:"Abonnieren", success:"Danke, ihr seid dabei."},
+    footer:{tagline:"Eine fr\u00e4nkische Initiative, die die Freude am Sport zu Kindern in Kenia und \u00c4thiopien bringt.", contact:"Kontakt", follow:"Als Prototyp erstellt. Inhalte & Zahlen sind Platzhalter zur Abstimmung.", rights:"Horn of Africa Moments"},
+    founder:{kicker:"Der Gr\u00fcnder", title:"Johannes Abraham", role:"Gr\u00fcnder, Horn of Africa Moments",
+      paras:[
+        "Johannes Abraham, Gr\u00fcnder von Horn of Africa Moments, ist Ingenieur und Absolvent, angetrieben von Sinn und Wirkung. Als Student der ersten Generation mit eritreischen Wurzeln liegt ihm viel daran, den Kindern und Gemeinschaften Ostafrikas etwas zur\u00fcckzugeben.",
+        "Aufgewachsen zwischen Deutschland und England, entwickelte er fr\u00fch ein starkes Gef\u00fchl f\u00fcr kulturelle Identit\u00e4t und Verantwortung. Seine Mission ist einfach, aber kraftvoll: die Kinder am Horn von Afrika durch echtes Handeln und freudvolle Erlebnisse zu st\u00e4rken und zu inspirieren.",
+        "Sein Weg f\u00fchrte ihn durch Europa, Afrika und Asien und schuf dabei Beziehungen und eine globale Perspektive, die heute seine gemeinn\u00fctzige Arbeit tragen.",
+        "Von seiner Zeit bei Mercedes-Benz bis zum Studium an Asiens bestplatzierter Tsinghua-Universit\u00e4t hat Johannes aus erster Hand erlebt, wie viel ein einzelner Mensch bewegen kann, wenn Leidenschaft und Sinn ihn antreiben.",
+        "Mit Horn of Africa Moments verfolgt er seinen Traum, Freude, Chancen und Hoffnung in die Region zu bringen, und das Leben von so vielen Kindern wie m\u00f6glich nachhaltig zu pr\u00e4gen."
+      ],
+      linkedin:"LinkedIn", back:"Zur\u00fcck zur Startseite"},
     forms:{required:"Bitte Name und E-Mail angeben.", email:"Bitte eine g\u00fcltige E-Mail-Adresse eingeben.", close:"Schlie\u00dfen",
-      gear:{tag:"F\u00fcr Vereine",title:"Vereinsausr\u00fcstung anbieten",sub:"Sagt uns, was ihr habt \u2014 den Rest \u00fcbernehmen wir.",club:"Verein oder Organisation",name:"Euer Name",emailL:"E-Mail",place:"PLZ / Ort",whatL:"Was k\u00f6nnt ihr spenden?",what:["Fu\u00dfb\u00e4lle","Trikots & Shirts","Hosen & Stutzen","Torwart-Ausr\u00fcstung","Schuhe","Sonstiges"],msg:"Noch etwas? (optional)",submit:"Spende absenden",okT:"Angebot erhalten.",okB:"Vielen Dank. Wir melden uns in den n\u00e4chsten Tagen, um die Abholung zu organisieren."},
-      money:{tag:"F\u00fcr Unterst\u00fctzer",title:"Football for Joy unterst\u00fctzen",sub:"Hinterlasst eure Daten \u2014 wir zeigen euch den besten Weg zu helfen.",name:"Euer Name",emailL:"E-Mail",howL:"Wie m\u00f6chtet ihr helfen?",how:["Einmalige Spende","Monatliche Spende","Unternehmens-/Vereinssponsoring","Noch unsicher"],msg:"Nachricht (optional)",submit:"Interesse anmelden",okT:"Vielen Dank.",okB:"Wir melden uns mit M\u00f6glichkeiten, die Kinder zu unterst\u00fctzen."}}
+      gear:{tag:"F\u00fcr Vereine",title:"Vereinsausr\u00fcstung anbieten",sub:"Sagt uns, was ihr habt. Den Rest \u00fcbernehmen wir.",club:"Verein oder Organisation",name:"Euer Name",emailL:"E-Mail",place:"PLZ / Ort",whatL:"Was k\u00f6nnt ihr spenden?",what:["Fu\u00dfb\u00e4lle","Trikots & Shirts","Hosen & Stutzen","Torwart-Ausr\u00fcstung","Schuhe","Sonstiges"],msg:"Noch etwas? (optional)",submit:"Spende absenden",okT:"Angebot erhalten.",okB:"Vielen Dank. Wir melden uns in den n\u00e4chsten Tagen, um die Abholung zu organisieren."},
+      money:{tag:"F\u00fcr Unterst\u00fctzer",title:"Football for Joy unterst\u00fctzen",sub:"Hinterlasst eure Daten, wir zeigen euch den besten Weg zu helfen.",name:"Euer Name",emailL:"E-Mail",howL:"Wie m\u00f6chtet ihr helfen?",how:["Einmalige Spende","Monatliche Spende","Unternehmens-/Vereinssponsoring","Noch unsicher"],msg:"Nachricht (optional)",submit:"Interesse anmelden",okT:"Vielen Dank.",okB:"Wir melden uns mit M\u00f6glichkeiten, die Kinder zu unterst\u00fctzen."}}
   }
 };
 
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const isEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 const ballSVG = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 7l3 2-1 3.5h-4L9 9l3-2zM12 7V3M15 9l3.5-1M14 12.5l2.5 3M10 12.5l-2.5 3M9 9L5.5 8"/></svg>';
-const photo = (src,alt)=>`<div class="ph"><img src="${src}" alt="${esc(alt)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="fb">${ballSVG}</span></div>`;
+const photo = (src,alt,pos)=>`<div class="ph"><img src="${src}" alt="${esc(alt)}" loading="lazy"${pos?` style="object-position:${pos}"`:""} onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="fb">${ballSVG}</span></div>`;
 const checkSVG = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 
 let lang = (navigator.language||"en").toLowerCase().startsWith("de") ? "de" : "en";
 
-function render(){
-  const t = COPY[lang];
-  const brand = `<a class="brand" href="#top"><img src="${LOGO}" alt="Horn of Africa Moments" onerror="this.style.display='none'"><span class="word">Horn of Africa Moments</span></a>`;
+function brandHTML(){
+  return `<a class="brand" href="#top"><img src="${LOGO}" alt="Horn of Africa Moments" onerror="this.style.display='none'"><span class="word">Horn of Africa Moments</span></a>`;
+}
+function headerHTML(t){
   const nav = `<a href="#mission">${t.nav.mission}</a><a href="#how">${t.nav.how}</a><a href="#impact">${t.nav.impact}</a><a href="#involved">${t.nav.involved}</a>`;
-  document.documentElement.lang = lang;
-  document.getElementById("app").innerHTML = `
-  <header class="hd"><div class="wrap hd-in">
-    ${brand}
+  return `<header class="hd"><div class="wrap hd-in">
+    ${brandHTML()}
     <nav class="nav">${nav}</nav>
     <div class="hd-actions">
       <div class="lang"><button data-lang="de" class="${lang==='de'?'on':''}">DE</button><span>/</span><button data-lang="en" class="${lang==='en'?'on':''}">EN</button></div>
       <button class="btn btn-ink" data-modal="gear">${t.ctaMain}</button>
       <button class="burger" id="burger" aria-label="Menu"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
     </div>
-  </div><div class="mobile-nav" id="mnav">${nav}<button class="btn btn-ink btn-block" data-modal="gear" style="margin-top:14px">${t.ctaMain}</button></div></header>
+  </div><div class="mobile-nav" id="mnav">${nav}<button class="btn btn-ink btn-block" data-modal="gear" style="margin-top:14px">${t.ctaMain}</button></div></header>`;
+}
+function footerHTML(t){
+  return `<footer class="ft"><div class="wrap">
+    <div class="ft-in">
+      <div style="max-width:320px">${brandHTML()}<p class="muted" style="margin-top:14px">${t.footer.tagline}</p></div>
+      <div class="muted"><strong style="font-weight:600;color:var(--ink)">${t.footer.contact}</strong><br><a href="mailto:horn.of.africa.moments@outlook.com">horn.of.africa.moments@outlook.com</a><br><a href="tel:+491796161099">+49 179 6161099</a><br>N\u00fcrnberg, Bayern \u00b7 Deutschland</div>
+    </div>
+    <div class="ft-base"><div>\u00a9 ${new Date().getFullYear()} ${t.footer.rights}</div><div>${t.footer.follow}</div></div>
+  </div></footer>`;
+}
+
+function renderHome(){
+  const t = COPY[lang];
+  document.documentElement.lang = lang;
+  document.getElementById("app").innerHTML = `
+  ${headerHTML(t)}
 
   <main id="top">
     <section class="hero"><div class="wrap hero-in">
@@ -338,7 +398,7 @@ function render(){
       </div>
       <figure class="hero-figure reveal in">
         <span class="tag">${t.hero.tag}</span>
-        <div class="frame">${photo(IMG.heroPhoto,t.hero.caption)}</div>
+        <div class="frame">${photo(IMG.hero,t.hero.caption,"68% center")}</div>
         <figcaption>${t.hero.caption}</figcaption>
       </figure>
     </div></section>
@@ -364,7 +424,7 @@ function render(){
         <h2 class="h2" style="margin-top:20px">${t.mission.title}</h2>
         <p class="quote">${t.mission.q}</p>
         <p class="lead">${t.mission.p}</p>
-        <div class="author"><span class="ln"></span><span>${t.mission.author}</span></div>
+        <a class="author author-link" href="#/founder"><span class="ln"></span><span class="nm">${t.mission.author}</span><span class="author-more">${t.mission.more}</span></a>
       </div>
     </div></section>
 
@@ -398,15 +458,14 @@ function render(){
     <section class="sec" id="impact"><div class="wrap">
       <div class="head-block reveal"><div class="kicker">${t.gallery.kicker}</div><h2 class="h2">${t.gallery.title}</h2><p class="lead">${t.gallery.lead}</p></div>
       <div class="ggrid">
-        <div class="gtile g-tall reveal">${photo(IMG.heroPhoto,"Pilot delivery")}</div>
+        <div class="gtile g-tall reveal">${photo(IMG.galleryLead,"Pilot delivery")}</div>
         ${IMG.gallery.map((g,i)=>`<div class="gtile g-wide reveal">${photo(g,"Football for Joy "+(i+1))}</div>`).join("")}
       </div>
     </div></section>
 
     <section class="sec partners"><div class="wrap">
       <div class="kicker reveal" style="justify-content:center">${t.partners.sub}</div>
-      <div class="plogos reveal">${t.partners.list.map(p=>`<span class="plogo">${p}</span>`).join("")}</div>
-      <div class="pnote">${t.partners.note}</div>
+      <div class="plogos reveal">${PARTNERS.map(p=>{const nm=lang==="de"?p.nameDe:p.name; return `<div class="plogo-item"><img class="plogo-img" src="${p.logo}" alt="${esc(nm)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="plogo" style="display:none">${nm}</span></div>`;}).join("")}</div>
     </div></section>
 
     <section class="sec news"><div class="wrap news-in">
@@ -417,21 +476,67 @@ function render(){
     </div></section>
   </main>
 
-  <footer class="ft"><div class="wrap">
-    <div class="ft-in">
-      <div style="max-width:320px">${brand}<p class="muted" style="margin-top:14px">${t.footer.tagline}</p></div>
-      <div class="muted"><strong style="font-weight:600;color:var(--ink)">${t.footer.contact}</strong><br><a href="mailto:horn.of.africa.moments@outlook.com">horn.of.africa.moments@outlook.com</a><br><a href="tel:+491796161099">+49 179 6161099</a><br>N\u00fcrnberg, Bayern \u00b7 Deutschland</div>
-    </div>
-    <div class="ft-base"><div>\u00a9 ${new Date().getFullYear()} ${t.footer.rights}</div><div>${t.footer.follow}</div></div>
-  </div></footer>`;
+  ${footerHTML(t)}`;
   wire();
+}
+
+function renderFounder(){
+  const t = COPY[lang], f = t.founder;
+  document.documentElement.lang = lang;
+  document.getElementById("app").innerHTML = `
+  ${headerHTML(t)}
+
+  <main id="top">
+    <section class="sec founder-sec"><div class="wrap">
+      <a class="back-link reveal in" href="#top">\u2190 ${f.back}</a>
+      <div class="founder-in">
+        <div class="founder-photo reveal in">${photo(IMG.founder,"Johannes Abraham")}</div>
+        <div class="reveal in">
+          <div class="kicker">${f.kicker}</div>
+          <h1 class="h2" style="margin-top:18px">${f.title}</h1>
+          <p class="founder-role">${f.role}</p>
+          ${f.paras.map(p=>`<p class="founder-p">${p}</p>`).join("")}
+          <div class="founder-actions">
+            <a class="btn btn-line" href="https://www.linkedin.com/in/johannes-abraham-117646234/" target="_blank" rel="noopener">${f.linkedin} \u2192</a>
+            <button class="btn btn-accent" data-modal="gear">${t.ctaMain}</button>
+          </div>
+        </div>
+      </div>
+    </div></section>
+  </main>
+
+  ${footerHTML(t)}`;
+  wire();
+}
+
+function draw(){
+  if(location.hash === "#/founder") renderFounder();
+  else renderHome();
+}
+
+function router(){
+  draw();
+  if(location.hash === "#/founder"){
+    window.scrollTo(0,0);
+  } else {
+    const h = location.hash;
+    if(h && h.length>1 && h!=="#top"){
+      const el = document.getElementById(h.slice(1));
+      if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+  }
 }
 
 function wire(){
   const t = COPY[lang];
-  document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang; const y=window.scrollY; render(); window.scrollTo(0,y);});
+  document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang; const y=window.scrollY; draw(); window.scrollTo(0,y);});
   document.querySelectorAll("[data-modal]").forEach(b=>b.onclick=()=>openModal(b.dataset.modal));
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.onclick=e=>{const id=a.getAttribute("href").slice(1),el=document.getElementById(id); if(el){e.preventDefault(); document.getElementById("mnav").style.display="none"; el.scrollIntoView({behavior:"smooth",block:"start"});}});
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.onclick=e=>{
+    const href=a.getAttribute("href");
+    if(href.startsWith("#/")) return; // route links (e.g. #/founder) are handled by the router
+    const id=href.slice(1), el=document.getElementById(id);
+    if(el){e.preventDefault(); const mn=document.getElementById("mnav"); if(mn)mn.style.display="none"; el.scrollIntoView({behavior:"smooth",block:"start"});}
+  });
   const burger=document.getElementById("burger"),mnav=document.getElementById("mnav");
   if(burger) burger.onclick=()=>{mnav.style.display=mnav.style.display==="block"?"none":"block";};
   const nb=document.getElementById("newsbtn");
@@ -485,7 +590,8 @@ function openModal(kind){
   };
 }
 
-render();
+window.addEventListener("hashchange", router);
+router();
 </script>
 </body>
 </html>
