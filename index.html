@@ -136,7 +136,11 @@ img{display:block; max-width:100%;}
 .inote{font-size:13px; color:var(--soft); margin-top:14px; line-height:1.5;}
 
 /* gallery */
-.ggrid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; margin-top:60px;}
+.gvid-row{display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:56px;}
+.gvid-row > div{flex:0 1 360px; max-width:360px; width:100%;}
+.gvid-tile{position:relative; border-radius:3px; overflow:hidden; aspect-ratio:9/16; background:var(--ink-deep); box-shadow:var(--shadow);}
+.gvid-tile video{width:100%; height:100%; object-fit:cover; display:block; background:var(--ink-deep);}
+.ggrid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; margin-top:16px;}
 .gtile{border-radius:3px; overflow:hidden;}
 .g-tall{grid-column:span 4; aspect-ratio:3/4;}
 .g-wide{grid-column:span 4; aspect-ratio:3/4;}
@@ -218,7 +222,7 @@ img{display:block; max-width:100%;}
   .hero-in,.mission-in,.news-in,.founder-in{grid-template-columns:1fr; gap:48px;}
   .hero-figure{max-width:420px; margin:0 auto;}
   .founder-photo{position:static; max-width:360px; margin-bottom:8px;}
-  .vgrid,.steps,.icards,.ib-in{grid-template-columns:1fr;}
+  .vgrid,.steps,.icards,.ib-in,.gvid-row{grid-template-columns:1fr;}
   .ib-in{gap:40px; padding:64px 0;}
   .vgrid{gap:1px;}
   .g-tall,.g-wide{grid-column:span 6;}
@@ -234,16 +238,20 @@ img{display:block; max-width:100%;}
 <script>
 const LOGO = "img/logo.png";
 const IMG = {
-  hero:"img/hero.jpg",                                                                        // NEW signature image (local) - hero only
-  founder:"img/founder.jpg",                                                                  // founder portrait (local)
-  galleryLead:"https://static.wixstatic.com/media/1c0547_356d0aa43f13431485d7b9d9ce251c15~mv2.jpg", // old hero, now first gallery tile
-  missionPhoto:"https://static.wixstatic.com/media/1c0547_b31bac33b20d4538913f46df7ab10446~mv2.jpg",
+  hero:"img/hero.jpg",              // signature runner shot
+  founder:"img/founder.jpg",        // founder portrait
+  galleryLead:"img/gallery-1.jpg",  // big tall tile in the gallery
+  missionPhoto:"img/mission.jpg",   // photo in the "Our Mission" block
   gallery:[
-    "https://static.wixstatic.com/media/1c0547_8454098ce65640a3ae043fce8436ed33~mv2.jpg",
-    "https://static.wixstatic.com/media/1c0547_0fd64ed8ddb14bea91ae5d102b391947~mv2.jpg",
-    "https://static.wixstatic.com/media/1c0547_8d09536e19504022afe20492d303657e~mv2.jpg"
+    "img/gallery-2.jpg",
+    "img/gallery-3.jpg",
+    "img/gallery-4.jpg",
+    "img/gallery-5.jpg"
   ]
 };
+
+// Two clips for the impact gallery. Drop the files into a video/ folder next to index.html.
+const VIDEOS = ["video/video-1.mp4","video/video-2.mp4"];
 
 /* Partner logos: drop the files into img/partners/ and they appear automatically.
    Until a file exists, the partner name shows as text (graceful fallback). */
@@ -279,7 +287,7 @@ const COPY = {
     involved:{kicker:"Get involved", title:"Two ways to get a child playing.",
       gear:{tag:"For clubs",title:"Donate your club's gear",body:"Footballs, jerseys, shorts, socks, keeper gloves. Any size, any condition. Your surplus is another child's first kit. We handle collection. You simply say yes.",list:["Footballs, any size, any condition","Jerseys, shorts & socks","Keeper gloves & boots"],cta:"Pledge gear"},
       money:{tag:"For supporters",title:"Become a sponsor",body:"Fund the transport, equipment and outreach that get gear to children who can't afford to play. Every contribution is traceable.",note:"Online giving is coming soon. Leave your details and we'll be in touch.",cta:"Register interest"}},
-    gallery:{kicker:"Our impact", title:"Football for Joy, in pictures.",
+    gallery:{kicker:"Our impact", title:"Football for Joy, in action.",
       lead:"Our pilot delivered more than we dared hope: over 200 footballs and 450+ jerseys, straight into children's hands."},
     partners:{sub:"Working alongside"},
     news:{title:"Stay close to the work.", sub:"Occasional updates from the pitch: deliveries, stories, and where your gear ends up.", placeholder:"Your email address", cta:"Subscribe", success:"Thank you. You're on the list."},
@@ -322,7 +330,7 @@ const COPY = {
     involved:{kicker:"Mitmachen", title:"Zwei Wege, ein Kind zum Spielen zu bringen.",
       gear:{tag:"F\u00fcr Vereine",title:"Vereinsausr\u00fcstung spenden",body:"B\u00e4lle, Trikots, Hosen, Stutzen, Torwarthandschuhe. Jede Gr\u00f6\u00dfe, jeder Zustand. Euer \u00dcberschuss ist das erste Trikot eines Kindes. Die Abholung \u00fcbernehmen wir. Ihr sagt einfach Ja.",list:["Fu\u00dfb\u00e4lle, jede Gr\u00f6\u00dfe, jeder Zustand","Trikots, Hosen & Stutzen","Torwarthandschuhe & Schuhe"],cta:"Ausr\u00fcstung anbieten"},
       money:{tag:"F\u00fcr Unterst\u00fctzer",title:"Sponsor werden",body:"Finanziert Transport, Ausr\u00fcstung und Verteilung, die die Sachen zu Kindern bringen, die sich das Spielen nicht leisten k\u00f6nnen. Jeder Beitrag ist nachvollziehbar.",note:"Online-Spenden folgen bald. Hinterlasst eure Daten, wir melden uns.",cta:"Interesse anmelden"}},
-    gallery:{kicker:"Unsere Wirkung", title:"Football for Joy, in Bildern.",
+    gallery:{kicker:"Unsere Wirkung", title:"Football for Joy, in Aktion.",
       lead:"Unser Pilotprojekt hat mehr bewirkt als erhofft: \u00fcber 200 Fu\u00dfb\u00e4lle und mehr als 450 Trikots, direkt in Kinderh\u00e4nde."},
     partners:{sub:"Wir arbeiten zusammen mit"},
     news:{title:"Bleibt nah an der Arbeit dran.", sub:"Ab und zu Neues vom Platz: \u00dcbergaben, Geschichten und wohin eure Ausr\u00fcstung gelangt.", placeholder:"Eure E-Mail-Adresse", cta:"Abonnieren", success:"Danke, ihr seid dabei."},
@@ -347,6 +355,7 @@ const isEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 const ballSVG = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 7l3 2-1 3.5h-4L9 9l3-2zM12 7V3M15 9l3.5-1M14 12.5l2.5 3M10 12.5l-2.5 3M9 9L5.5 8"/></svg>';
 const photo = (src,alt,pos)=>`<div class="ph"><img src="${src}" alt="${esc(alt)}" loading="lazy"${pos?` style="object-position:${pos}"`:""} onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="fb">${ballSVG}</span></div>`;
 const checkSVG = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+const video = (src,alt)=>`<div class="gvid-tile"><video controls preload="metadata" playsinline aria-label="${esc(alt)}"><source src="${src}#t=0.4" type="video/mp4"></video></div>`;
 
 let lang = (navigator.language||"en").toLowerCase().startsWith("de") ? "de" : "en";
 
@@ -457,6 +466,9 @@ function renderHome(){
 
     <section class="sec" id="impact"><div class="wrap">
       <div class="head-block reveal"><div class="kicker">${t.gallery.kicker}</div><h2 class="h2">${t.gallery.title}</h2><p class="lead">${t.gallery.lead}</p></div>
+      <div class="gvid-row">
+        ${VIDEOS.map((v,i)=>`<div class="reveal">${video(v,"Football for Joy clip "+(i+1))}</div>`).join("")}
+      </div>
       <div class="ggrid">
         <div class="gtile g-tall reveal">${photo(IMG.galleryLead,"Pilot delivery")}</div>
         ${IMG.gallery.map((g,i)=>`<div class="gtile g-wide reveal">${photo(g,"Football for Joy "+(i+1))}</div>`).join("")}
@@ -465,7 +477,7 @@ function renderHome(){
 
     <section class="sec partners"><div class="wrap">
       <div class="kicker reveal" style="justify-content:center">${t.partners.sub}</div>
-      <div class="plogos reveal">${PARTNERS.map(p=>{const nm=lang==="de"?p.nameDe:p.name; return `<div class="plogo-item"><img class="plogo-img" src="${p.logo}" alt="${esc(nm)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="plogo" style="display:none">${nm}</span></div>`;}).join("")}</div>
+      <div class="plogos reveal">${PARTNERS.map(p=>`<span class="plogo">${lang==="de"?p.nameDe:p.name}</span>`).join("")}</div>
     </div></section>
 
     <section class="sec news"><div class="wrap news-in">
