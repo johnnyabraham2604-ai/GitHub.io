@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Trivia Night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-stage:#14141f;
+    --bg-panel:#1c1d30;
+    --bg-card:#242540;
+    --gold:#e8a33d;
+    --gold-dim:#a97a2e;
+    --teal:#3aa398;
+    --coral:#d9694f;
+    --text-light:#f5f1e6;
+    --text-muted:#a9a8c0;
+    --danger:#d9534f;
+    --border:rgba(245,241,230,0.1);
+    --radius:16px;
+    --font-display:'Fraunces', serif;
+    --font-sans:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg-stage);
+    color:var(--text-light);
+    font-family:var(--font-sans);
+    min-height:100vh;
+    padding:2rem 1rem 4rem;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  .marquee{display:flex;justify-content:center;gap:10px;margin-bottom:1.5rem;}
+  .bulb{width:8px;height:8px;border-radius:50%;background:var(--gold-dim);animation:glow 2.4s ease-in-out infinite;}
+  @keyframes glow{0%,100%{opacity:.25;box-shadow:none;}50%{opacity:1;box-shadow:0 0 8px 2px var(--gold);}}
+  h1.hero{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(30px,5vw,44px);
+    text-align:center;
+    margin:0 0 .25rem;
+    letter-spacing:.01em;
+  }
+  .subtitle{text-align:center;color:var(--text-muted);margin:0 0 2rem;font-size:15px;}
+  .hidden{display:none !important;}
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:1.75rem;
+  }
+  label.field-label{display:block;font-size:13px;color:var(--text-muted);margin-bottom:.4rem;}
+  .team-row{display:flex;align-items:center;gap:10px;margin-bottom:.75rem;}
+  .dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+  .team-row input[type=text]{
+    flex:1;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    color:var(--text-light);
+    border-radius:10px;
+    padding:.6rem .8rem;
+    font-size:15px;
+    font-family:var(--font-sans);
+  }
+  .team-row input[type=text]:focus{outline:2px solid var(--gold);outline-offset:1px;}
+  .icon-btn{
+    background:transparent;border:1px solid var(--border);color:var(--text-muted);
+    border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:16px;
+  }
+  .icon-btn:hover{color:var(--text-light);border-color:var(--text-muted);}
+  button.primary{
+    background:var(--gold);color:#1b1408;border:none;font-weight:600;
+    padding:.85rem 1.5rem;border-radius:12px;font-size:16px;cursor:pointer;font-family:var(--font-sans);
+    width:100%;margin-top:1rem;
+  }
+  button.primary:hover{background:#f0b155;}
+  button.ghost{
+    background:transparent;border:1px solid var(--border);color:var(--text-light);
+    padding:.7rem 1.2rem;border-radius:12px;font-size:14px;cursor:pointer;font-family:var(--font-sans);
+  }
+  button.ghost:hover{border-color:var(--text-muted);}
+  button.add-team{
+    background:transparent;border:1px dashed var(--border);color:var(--text-muted);
+    padding:.55rem 1rem;border-radius:10px;font-size:14px;cursor:pointer;font-family:var(--font-sans);
+    margin-top:.4rem;
+  }
+  button.add-team:hover{color:var(--text-light);border-color:var(--text-muted);}
+
+  .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px;}
+  .chip{
+    display:inline-block;padding:.3rem .8rem;border-radius:999px;font-size:13px;font-weight:600;
+    color:#1b1408;
+  }
+  .counter{font-family:var(--font-mono);color:var(--text-muted);font-size:14px;}
+  .progress-track{height:5px;background:var(--bg-card);border-radius:99px;overflow:hidden;margin-bottom:1.75rem;}
+  .progress-fill{height:100%;background:var(--gold);transition:width .3s ease;}
+
+  .stage{display:flex;flex-direction:column;align-items:center;gap:1.75rem;}
+  .question-text{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(20px,3.2vw,28px);
+    text-align:center;line-height:1.4;max-width:640px;
+  }
+  .timer-ring{position:relative;width:150px;height:150px;}
+  .timer-ring svg{transform:rotate(-90deg);width:100%;height:100%;}
+  .timer-ring circle{fill:none;stroke-width:8;}
+  .ring-bg{stroke:var(--bg-card);}
+  .ring-fg{stroke:var(--gold);stroke-linecap:round;transition:stroke-dashoffset 1s linear, stroke .3s ease;}
+  .timer-num{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-mono);font-size:34px;font-weight:600;
+  }
+  .controls-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+
+  .scoreboard{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;}
+  .score-pill{
+    display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);
+    border-radius:12px;padding:.5rem .9rem;font-size:14px;
+  }
+  .score-pill .num{font-family:var(--font-mono);font-weight:600;color:var(--gold);}
+  .answer-input{
+    width:100%;background:var(--bg-card);border:1px solid var(--border);color:var(--text-light);
+    border-radius:10px;padding:.7rem .9rem;font-size:15px;font-family:var(--font-sans);margin:1rem 0 1.25rem;
+  }
+  .answer-input:focus{outline:2px solid var(--gold);outline-offset:1px;}
+  .award-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;}
+  .award-btn{
+    display:flex;align-items:center;gap:8px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg-card);color:var(--text-light);padding:.55rem 1rem;font-size:14px;cursor:pointer;
+    font-family:var(--font-sans);
+  }
+  .award-btn.on{border-color:var(--gold);background:rgba(232,163,61,0.15);color:var(--gold);}
+  .nav-row{display:flex;justify-content:space-between;gap:10px;}
+
+  .final-wrap{text-align:center;}
+  .trophy{font-size:44px;color:var(--gold);margin-bottom:.5rem;}
+  .rank-row{
+    display:flex;justify-content:space-between;align-items:center;background:var(--bg-card);
+    border:1px solid var(--border);border-radius:12px;padding:.9rem 1.2rem;margin-bottom:.6rem;text-align:left;
+  }
+  .rank-row.winner{border-color:var(--gold);background:rgba(232,163,61,0.12);}
+  .rank-name{font-weight:600;}
+  .rank-score{font-family:var(--font-mono);color:var(--gold);font-weight:600;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2 class="sr-only">Interactive family trivia night game with a team setup screen, a 30 second timed question screen, and a review screen for scoring open answers together.</h2>
+  <div class="marquee" aria-hidden="true">
+    <div class="bulb" style="animation-delay:0s"></div>
+    <div class="bulb" style="animation-delay:.2s"></div>
+    <div class="bulb" style="animation-delay:.4s"></div>
+    <div class="bulb" style="animation-delay:.6s"></div>
+    <div class="bulb" style="animation-delay:.8s"></div>
+    <div class="bulb" style="animation-delay:1s"></div>
+    <div class="bulb" style="animation-delay:1.2s"></div>
+  </div>
+  <h1 class="hero">Family Trivia Night</h1>
+  <p class="subtitle" id="subtitle">Set up your teams to begin</p>
+
+  <div id="screen-setup" class="card">
+    <label class="field-label">Teams</label>
+    <div id="team-list"></div>
+    <button class="add-team" onclick="addTeam()"><i class="ti"></i>+ Add team</button>
+    <button class="primary" onclick="startGame()">Start the game</button>
+  </div>
+
+  <div id="screen-play" class="card hidden">
+    <div class="top-row">
+      <span class="chip" id="play-chip"></span>
+      <span class="counter" id="play-counter"></span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="play-progress"></div></div>
+    <div class="stage">
+      <div class="question-text" id="play-question"></div>
+      <div class="timer-ring">
+        <svg viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="0"></circle>
+        </svg>
+        <div class="timer-num" id="timer-num">30</div>
+      </div>
+      <div class="controls-row">
+        <button class="ghost" onclick="prevQuestion()">Previous</button>
+        <button class="ghost" id="timer-toggle" onclick="toggleTimer()">Pause</button>
+        <button class="ghost" onclick="resetTimer()">Reset timer</button>
+        <button class="primary" style="width:auto;margin-top:0;" id="next-btn" onclick="nextQuestion()">Next question</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-review" class="card hidden">
+    <div class="scoreboard" id="scoreboard"></div>
+    <div class="top-row">
+      <span class="chip" id="review-chip"></span>
+      <span class="counter" id="review-counter"></span>
+    </div>
+    <div class="question-text" id="review-question" style="text-align:left;margin-bottom:0;"></div>
+    <input type="text" class="answer-input" id="answer-input" placeholder="Type or say the correct answer here">
+    <div class="award-row" id="award-row"></div>
+    <div class="nav-row">
+      <button class="ghost" onclick="prevReview()">Previous</button>
+      <button class="primary" style="width:auto;margin-top:0;" id="review-next-btn" onclick="nextReview()">Next</button>
+    </div>
+  </div>
+
+  <div id="screen-final" class="card hidden final-wrap">
+    <div class="trophy">&#127942;</div>
+    <h2 style="font-family:var(--font-display);font-weight:600;margin-top:0;">Final results</h2>
+    <div id="final-list"></div>
+    <button class="ghost" onclick="restart()" style="margin-top:1rem;">Play again</button>
+  </div>
+</div>
+
+<script>
+const categories = [
+  { name: "Story of the parents I", questions: [
+    "How many languages can Negassi speak",
+    "What was the number of our house in Eritrea?",
+    "Why is Pawlos's nickname Brki?",
+    "On our famous boot ride in Turkey 5 people fell off the boot, however only two did not make it back on the boot. Who were they?",
+    "The recipe for which dish does Asmeret hide?",
+    "What is the brand of the car that Negassi imported to saudi arabia",
+    "What was the name of our Dog in Asmera?",
+    "What's the name of the church closest to our house.",
+    "Which country had a government building on the same street as our house.",
+    "What was the name of our Cat in Eritrea?"
+  ]},
+  { name: "Gen Z stuff", questions: [
+    "What does rizz mean?",
+    "If something is described as mid, what does that mean?",
+    "What does no cap mean?",
+    "Which dance went viral primarily through the game Fortnite?",
+    "Which song by Olivia Rodrigo became a massive Gen Z breakup anthem in 2021?",
+    "What is quiet quitting?",
+    "What's a soft launch in the context of relationships?",
+    "Old Town Road by Lil Nas X famously blended which two genres?",
+    "Whats 9 + 10",
+    "\"That's what she said\" is a running joke most associated with which TV character?"
+  ]},
+  { name: "Who did this", questions: [
+    "Who was born first sidon or naomi",
+    "Who got into a fight in a football stadium",
+    "Whose name is Ariam",
+    "Who spent two weeks in prison in Eritrea",
+    "Who stole another sibling's homework in school in Eritrea?",
+    "Who got lost in turkey",
+    "Who spent one night in prison in Europe.",
+    "Who jumped through a glass door as a child",
+    "Who ate a frog?",
+    "Who was the last person to visit Eritrea?"
+  ]},
+  { name: "Eritrea", questions: [
+    "Name all countries that share a land border with Eritrea.",
+    "Eritrea gained independence in 1991, however, when did the UN recognize Eritrea as an independent sovereign state.",
+    "Which country was the last to colonize Eritrea?",
+    "What nickname has Asmara earned for its well preserved Italian architecture?",
+    "What is the name of Eritrea's second largest city?",
+    "What is the highest mountain in Eritrea, and roughly how tall is it?",
+    "What was the name of the main rebel group that led Eritrea's fight for independence?",
+    "What is the name of the Eritrean cyclist who won the green jersey at the Tour de France",
+    "What golden emblem sits in the center of Eritrea's flag?",
+    "What was the travel mode from Massawa to Asmara in 1930?"
+  ]},
+  { name: "Global trivia", questions: [
+    "What is the chemical symbol for gold?",
+    "Which European country is made up of over 400 islands but only about 200 are inhabited?",
+    "Which country has a coastline on both the Atlantic and Indian Oceans?",
+    "Why does the Eiffel Tower actually grow taller in the summer?",
+    "What is the Richter Scale used to measure?",
+    "Which country introduced the world's first paper currency?",
+    "Which country invented the sport of table tennis",
+    "Which country has more sheep than people?",
+    "Which famous ship sank in the year 1912?",
+    "Which country has the only flag that is not rectangular?"
+  ]},
+  { name: "Story of the parents II", questions: [
+    "Whats the last digit of our Eritrean phone number?",
+    "Which are the two fruits we had in our garden when the parents grew up?",
+    "Where did Brki and Welesh first meet",
+    "Who went to China the most times?",
+    "What's Yonas's baptism name?",
+    "Who was the last person to arrive in Turkey for the family reunion",
+    "What was the name of our famous travel agent in Turkey?",
+    "What was the original location for our trip before we decided to go to Turkey?",
+    "What was the original year for the Canada family gathering planned for",
+    "Who didn't go in the water in Turkey, not even once?",
+    "Which company does Degol work for"
+  ]}
+];
+
+const catColors = ["#e8a33d","#3aa398","#d9694f","#c95a94","#4f8fd9","#8aa650"];
+const teamColorPalette = ["#e8a33d","#3aa398","#d9694f","#c95a94","#4f8fd9","#8aa650"];
+
+const deck = [];
+categories.forEach((cat, ci) => {
+  cat.questions.forEach(q => deck.push({ category: cat.name, catIndex: ci, text: q }));
+});
+
+let screen = "setup";
+let teams = [
+  { name: "Team 1", color: teamColorPalette[0] },
+  { name: "Team 2", color: teamColorPalette[1] }
+];
+let playIndex = 0;
+let reviewIndex = 0;
+let timeLeft = 30;
+let timerId = null;
+let timerRunning = false;
+let awarded = {};
+
+function showScreen(name){
+  screen = name;
+  ["setup","play","review","final"].forEach(s => {
+    document.getElementById("screen-" + s).classList.toggle("hidden", s !== name);
+  });
+  const subtitle = document.getElementById("subtitle");
+  if(name === "setup") subtitle.textContent = "Set up your teams to begin";
+  else if(name === "play") subtitle.textContent = "Write your answers down, no peeking";
+  else if(name === "review") subtitle.textContent = "Mark it together, question by question";
+  else subtitle.textContent = "Thanks for playing";
+}
+
+function renderTeamList(){
+  const list = document.getElementById("team-list");
+  list.innerHTML = "";
+  teams.forEach((t, i) => {
+    const row = document.createElement("div");
+    row.className = "team-row";
+    row.innerHTML = `
+      <span class="dot" style="background:${t.color}"></span>
+      <input type="text" value="${t.name}" oninput="renameTeam(${i}, this.value)">
+      ${teams.length > 1 ? `<button class="icon-btn" onclick="removeTeam(${i})">&times;</button>` : ""}
+    `;
+    list.appendChild(row);
+  });
+}
+
+function renameTeam(i, val){ teams[i].name = val || ("Team " + (i+1)); }
+
+function addTeam(){
+  if(teams.length >= 6) return;
+  teams.push({ name: "Team " + (teams.length + 1), color: teamColorPalette[teams.length] });
+  renderTeamList();
+}
+
+function removeTeam(i){
+  teams.splice(i, 1);
+  renderTeamList();
+}
+
+function startGame(){
+  playIndex = 0;
+  showScreen("play");
+  renderPlay();
+}
+
+function renderPlay(){
+  const q = deck[playIndex];
+  const chip = document.getElementById("play-chip");
+  chip.textContent = q.category;
+  chip.style.background = catColors[q.catIndex];
+  document.getElementById("play-counter").textContent = "Question " + (playIndex + 1) + " of " + deck.length;
+  document.getElementById("play-question").textContent = q.text;
+  document.getElementById("play-progress").style.width = ((playIndex) / deck.length * 100) + "%";
+  document.getElementById("next-btn").textContent = playIndex === deck.length - 1 ? "Finish round" : "Next question";
+  resetTimer();
+}
+
+function updateRing(){
+  const circumference = 326.7;
+  const offset = circumference * (1 - timeLeft / 30);
+  const ring = document.getElementById("ring-fg");
+  ring.style.strokeDashoffset = offset;
+  ring.style.stroke = timeLeft <= 10 ? "#d9534f" : "#e8a33d";
+  document.getElementById("timer-num").textContent = timeLeft;
+}
+
+function toggleTimer(){
+  if(timerRunning){ pauseTimer(); } else { runTimer(); }
+}
+
+function runTimer(){
+  if(timerId) return;
+  timerRunning = true;
+  document.getElementById("timer-toggle").textContent = "Pause";
+  timerId = setInterval(() => {
+    if(timeLeft > 0){
+      timeLeft -= 1;
+      updateRing();
+    } else {
+      pauseTimer();
+    }
+  }, 1000);
+}
+
+function pauseTimer(){
+  clearInterval(timerId);
+  timerId = null;
+  timerRunning = false;
+  document.getElementById("timer-toggle").textContent = "Resume";
+}
+
+function resetTimer(){
+  pauseTimer();
+  timeLeft = 30;
+  updateRing();
+  runTimer();
+}
+
+function nextQuestion(){
+  if(playIndex < deck.length - 1){
+    playIndex += 1;
+    renderPlay();
+  } else {
+    pauseTimer();
+    reviewIndex = 0;
+    showScreen("review");
+    renderReview();
+  }
+}
+
+function prevQuestion(){
+  if(playIndex > 0){
+    playIndex -= 1;
+    renderPlay();
+  }
+}
+
+function computeScores(){
+  return teams.map((t, ti) => {
+    let score = 0;
+    deck.forEach((q, qi) => { if(awarded[qi + "_" + ti]) score += 1; });
+    return { name: t.name, color: t.color, score: score };
+  });
+}
+
+function renderScoreboard(){
+  const scores = computeScores();
+  const board = document.getElementById("scoreboard");
+  board.innerHTML = "";
+  scores.forEach(s => {
+    const pill = document.createElement("div");
+    pill.className = "score-pill";
+    pill.innerHTML = `<span class="dot" style="background:${s.color}"></span>${s.name}<span class="num">${s.score}</span>`;
+    board.appendChild(pill);
+  });
+}
+
+function renderReview(){
+  renderScoreboard();
+  const q = deck[reviewIndex];
+  const chip = document.getElementById("review-chip");
+  chip.textContent = q.category;
+  chip.style.background = catColors[q.catIndex];
+  document.getElementById("review-counter").textContent = "Question " + (reviewIndex + 1) + " of " + deck.length;
+  document.getElementById("review-question").textContent = q.text;
+  document.getElementById("answer-input").value = "";
+  const row = document.getElementById("award-row");
+  row.innerHTML = "";
+  teams.forEach((t, ti) => {
+    const key = reviewIndex + "_" + ti;
+    const on = !!awarded[key];
+    const btn = document.createElement("button");
+    btn.className = "award-btn" + (on ? " on" : "");
+    btn.textContent = (on ? "\u2713 " : "+1 ") + t.name;
+    btn.onclick = () => {
+      awarded[key] = !awarded[key];
+      renderReview();
+    };
+    row.appendChild(btn);
+  });
+  document.getElementById("review-next-btn").textContent = reviewIndex === deck.length - 1 ? "See final results" : "Next";
+}
+
+function nextReview(){
+  if(reviewIndex < deck.length - 1){
+    reviewIndex += 1;
+    renderReview();
+  } else {
+    showScreen("final");
+    renderFinal();
+  }
+}
+
+function prevReview(){
+  if(reviewIndex > 0){
+    reviewIndex -= 1;
+    renderReview();
+  }
+}
+
+function renderFinal(){
+  const scores = computeScores().sort((a,b) => b.score - a.score);
+  const list = document.getElementById("final-list");
+  list.innerHTML = "";
+  const topScore = scores.length ? scores[0].score : 0;
+  scores.forEach(s => {
+    const row = document.createElement("div");
+    row.className = "rank-row" + (s.score === topScore ? " winner" : "");
+    row.innerHTML = `<span class="rank-name">${s.name}</span><span class="rank-score">${s.score}</span>`;
+    list.appendChild(row);
+  });
+}
+
+function restart(){
+  playIndex = 0;
+  reviewIndex = 0;
+  timeLeft = 30;
+  awarded = {};
+  pauseTimer();
+  showScreen("setup");
+}
+
+renderTeamList();
+showScreen("setup");
+</script>
+</body>
+</html>
